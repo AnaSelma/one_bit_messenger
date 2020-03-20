@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
 		StatusUpdaterJob.perform_now(user)
 	  end
 	
-	  Warden::Manager.before_logout do |user, auth, opts|
+	Warden::Manager.before_logout do |user, auth, opts|
 		user.update(is_online: false)
 		StatusUpdaterJob.perform_now(user)
-	  end
-	  
+		end
+	
   protected
  
   def configure_devise_params
